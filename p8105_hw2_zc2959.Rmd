@@ -1,0 +1,17 @@
+---
+title: "p8105_hw2_zc2959"
+author: "Zhenghong Chen zc2959"
+date: "2026-10-06"
+output: github_document
+---
+
+```{r setup, include = FALSE}
+library(tidyverse)
+library(readxl)
+```
+
+
+
+
+
+
