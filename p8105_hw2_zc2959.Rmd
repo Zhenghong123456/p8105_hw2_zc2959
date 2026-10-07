@@ -507,6 +507,15 @@ n_combined
 2. Each row represents one participant at one follow-up visit. The final dataset now contains both baseline demographic information and amyloid measurements.
 
 
+Finally, I saved the combined dataset as a CSV file.
+
+```{r}
+write_csv(
+  mci_complete,
+  "./data/data_mci/mci_complete.csv"
+)
+```
+
 
 
 
