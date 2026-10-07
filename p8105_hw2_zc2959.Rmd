@@ -475,6 +475,37 @@ amyloid_only
 
 2. `r nrow(amyloid_only)` participants appear only in the amyloid dataset, so the two datasets do not contain exactly the same participants.
 
+## Combining Baseline and Amyloid Data
+
+Since the final dataset should keep only participants who appear in both datasets, I used `inner_join()` and matched the datasets using `id`.
+
+```{r combine_mci}
+mci_complete = 
+  inner_join(
+    baseline_df,
+    amyloid_df,
+    by = "id"
+  )
+
+head(mci_complete, 10)
+dim(mci_complete)
+```
+
+```{r combined_participants}
+n_combined = 
+  mci_complete |>
+  distinct(id) |>
+  nrow()
+
+n_combined
+```
+
+### Combined Data Description
+
+1. After combining the datasets, I found that `mci_complete` has `r nrow(mci_complete)` observations from `r n_combined` participants. Only participants who appear in both datasets are kept.
+
+2. Each row represents one participant at one follow-up visit. The final dataset now contains both baseline demographic information and amyloid measurements.
+
 
 
 
