@@ -36,7 +36,32 @@ transit_df =
 3. The data are not tidy yet because the route information is spread across `route1` to `route11`.
 
 
+## Subway Stations
 
+```{r station_questions}
+n_stations = 
+  transit_df |>
+  distinct(line, station_name) |>
+  nrow()
+
+n_ada = 
+  transit_df |>
+  filter(ada == TRUE) |>
+  distinct(line, station_name) |>
+  nrow()
+
+entry_prop = 
+  transit_df |>
+  filter(vending == "NO") |>
+  pull(entry) |>
+  mean()
+```
+
+1. There are `r n_stations` distinct stations.
+
+2. `r n_ada` stations are ADA compliant.
+
+3. `r round(entry_prop * 100, 1)`% of station entrances / exits without vending allow entrance.
 
 
 
