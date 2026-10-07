@@ -406,6 +406,43 @@ women_apoe_prop
 
 3. There are `r n_women` women in the study, and `r n_women_apoe` of them are APOE4 carriers. Therefore, `r round(women_apoe_prop * 100, 1)`% of women in the study are APOE4 carriers.
 
+## Amyloid Biomarker Data
+
+```{r amyloid_data}
+amyloid_df = 
+  read_csv(
+    "./data/data_mci/mci_amyloid.csv",
+    skip = 1,
+    na = c("NA", "Na", "")
+  ) |>
+  janitor::clean_names() |>
+  rename(id = study_id) |>
+  pivot_longer(
+    baseline:time_8,
+    names_to = "visit",
+    values_to = "amyloid_ratio"
+  )
+
+head(amyloid_df, 10)
+names(amyloid_df)
+dim(amyloid_df)
+```
+
+```{r amyloid_participants}
+n_amyloid = 
+  amyloid_df |>
+  distinct(id) |>
+  nrow()
+
+n_amyloid
+```
+
+### Amyloid Data Description
+
+1. Since the first row contains descriptions rather than the variable names, I used `skip = 1` when importing the file. I also treated `"NA"` and `"Na"` as missing values.
+
+2. I noticed that the amyloid measurements were stored in separate columns for different follow-up visits, so I used `pivot_longer()` to put the visit and amyloid ratio into separate variables. The cleaned dataset has `r nrow(amyloid_df)` observations from `r n_amyloid` participants.
+
 
 
 
