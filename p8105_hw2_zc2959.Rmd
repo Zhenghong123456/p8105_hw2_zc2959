@@ -98,6 +98,59 @@ n_a_ada =
 
 2. `r n_a_ada` of the stations served by the A train are ADA compliant.
 
+# Problem 2
+
+```{r}
+library(readxl)
+```
+
+
+## Trash Wheel Data
+
+```{r mr_trash}
+mr_trash = 
+  readxl::read_excel(
+    "./data/202610 Trash Wheel Collection Data.xlsx",
+    sheet = "Mr. Trash Wheel",
+    range = "A2:N742"
+  ) |>
+  janitor::clean_names() |>
+  drop_na(dumpster) |>
+  mutate(
+    year = as.integer(year),
+    sports_balls = as.integer(round(sports_balls)),
+    wheel = "Mr. Trash Wheel"
+  )
+
+head(mr_trash, 5)
+names(mr_trash)
+dim(mr_trash)
+```
+
+### Mr. Trash Wheel Description
+
+1. The Mr. Trash Wheel data have `r nrow(mr_trash)` observations after removing rows without dumpster data.
+
+2. The variable names were cleaned using `clean_names()`.
+
+3. `sports_balls` was rounded to the nearest whole number and converted to an integer.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
