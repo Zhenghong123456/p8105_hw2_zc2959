@@ -61,7 +61,7 @@ entry_prop =
 
 2. `r n_ada` stations are ADA compliant.
 
-3. `r round(entry_prop * 100, 1)`% of station entrances / exits without vending allow entrance.
+3. `r round(entry_prop * 100, 5)`% of station entrances / exits without vending allow entrance.
 
 
 
