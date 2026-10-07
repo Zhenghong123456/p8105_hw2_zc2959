@@ -7,8 +7,39 @@ output: github_document
 
 ```{r setup, include = FALSE}
 library(tidyverse)
-library(readxl)
 ```
+
+# Problem 1
+
+## NYC Subway Data
+
+```{r transit}
+transit_df = 
+  read_csv("./data/NYC_Transit_Subway_Entrance_And_Exit_Data - NYC_Transit_Subway_Entrance_And_Exit_Data.csv") |>
+  janitor::clean_names() |>
+  select(
+    line, station_name, station_latitude, station_longitude, route1:route11, entrance_type, entry, vending, ada) |>
+  mutate(
+    entry = case_match(
+      entry,
+      "YES" ~ TRUE,
+      "NO" ~ FALSE
+    )
+  )
+```
+### Subway Data Description
+
+1. `transit_df` has `r nrow(transit_df)` rows and `r ncol(transit_df)` columns, with each row representing one subway entrance or exit.
+
+2. The data include the station, line, location, routes served, entrance type, entry, vending, and ADA status. I kept the columns needed for the analysis and changed `entry` from YES / NO to TRUE / FALSE.
+
+3. The data are not tidy yet because the route information is spread across `route1` to `route11`.
+
+
+
+
+
+
 
 
 
