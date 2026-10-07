@@ -135,7 +135,44 @@ dim(mr_trash)
 
 3. `sports_balls` was rounded to the nearest whole number and converted to an integer.
 
+## Professor Trash Wheel and Gwynnda
 
+```{r}
+prof_trash = 
+  readxl::read_excel(
+    "./data/202610 Trash Wheel Collection Data.xlsx",
+    sheet = "Professor Trash Wheel",
+    range = "A2:M139",
+    na = "dive"
+  ) |>
+  janitor::clean_names() |>
+  drop_na(dumpster) |>
+  mutate(
+    year = as.integer(year),
+    wheel = "Professor Trash Wheel"
+  )
+
+gwynnda_trash = 
+  readxl::read_excel(
+    "./data/202610 Trash Wheel Collection Data.xlsx",
+    sheet = "Gwynnda the Good Wheel of the W",
+    range = "A2:L394"
+  ) |>
+  janitor::clean_names() |>
+  drop_na(dumpster) |>
+  mutate(
+    year = as.integer(year),
+    wheel = "Gwynnda"
+  )
+
+head(prof_trash, 5)
+head(gwynnda_trash, 5)
+
+dim(prof_trash)
+dim(gwynnda_trash)
+```
+
+The Professor Trash Wheel and Gwynnda data are cleaned in the same way, and `wheel` is added to identify the source of each observation.
 
 
 
