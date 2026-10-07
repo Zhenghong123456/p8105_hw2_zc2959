@@ -174,7 +174,38 @@ dim(gwynnda_trash)
 
 The Professor Trash Wheel and Gwynnda data are cleaned in the same way, and `wheel` is added to identify the source of each observation.
 
+## Combining Trash Wheel Data
 
+```{r combine_trash}
+trash_wheel = 
+  bind_rows(
+    mr_trash,
+    prof_trash,
+    gwynnda_trash
+  ) |>
+  select(wheel, everything())
+
+head(trash_wheel, 5)
+dim(trash_wheel)
+```
+
+```{r trash_variables}
+trash_wheel |>
+  select(
+    wheel, dumpster, month, year,
+    weight_tons, volume_cubic_yards,
+    plastic_bottles, cigarette_butts
+  ) |>
+  head(10)
+```
+
+### Trash Wheel Data Description
+
+1. Before combining the data, Mr. Trash Wheel has `r nrow(mr_trash)` observations, Professor Trash Wheel has `r nrow(prof_trash)` observations, and Gwynnda has `r nrow(gwynnda_trash)` observations. After using `bind_rows()`, the combined `trash_wheel` dataset has `r nrow(trash_wheel)` observations, with each row representing one dumpster collection.
+
+2. The combined dataset includes key variables such as `wheel`, `dumpster`, `month`, `year`, `weight_tons`, `volume_cubic_yards`, `plastic_bottles`, and `cigarette_butts`. The `wheel` variable shows which Trash Wheel each observation comes from, while the other variables describe when the dumpster was collected and the amount or type of trash collected.
+
+3. After combining the three datasets, observations from all three Trash Wheels are stored in the same dataframe. Variables with the same name are combined into the same columns, while variables that were not recorded for every Trash Wheel contain missing values for those observations.
 
 
 
