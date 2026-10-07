@@ -208,11 +208,63 @@ trash_wheel |>
 3. After combining the three datasets, observations from all three Trash Wheels are stored in the same dataframe. Variables with the same name are combined into the same columns, while variables that were not recorded for every Trash Wheel contain missing values for those observations.
 
 
+## Trash Wheel Questions
 
+For Professor Trash Wheel, we first filter the combined dataset to keep only observations from Professor Trash Wheel. We then focus on `weight_tons`, since this is the variable needed to answer the question about total trash collected. The first few observations are shown below to check the data used in the calculation.
 
+```{r professor_data}
+trash_wheel |>
+  filter(wheel == "Professor Trash Wheel") |>
+  select(wheel, dumpster, weight_tons) |>
+  head(10)
+```
 
+The total weight is calculated by pulling `weight_tons` from the filtered data and summing all of the values.
 
+```{r professor_weight}
+prof_weight = 
+  trash_wheel |>
+  filter(wheel == "Professor Trash Wheel") |>
+  pull(weight_tons) |>
+  sum()
 
+prof_weight
+```
+
+1. Professor Trash Wheel collected `r prof_weight` tons of trash in total.
+
+For Gwynnda, we only need observations from June 2022. We therefore filter by `wheel`, `month`, and `year`, and then look at the `cigarette_butts` variable for those observations. The filtered rows are shown below before calculating the total.
+
+```{r gwynnda_data}
+trash_wheel |>
+  filter(
+    wheel == "Gwynnda",
+    month == "June",
+    year == 2022
+  ) |>
+  select(
+    wheel, dumpster, month, year,
+    cigarette_butts
+  )
+```
+
+The total number of cigarette butts is calculated by pulling `cigarette_butts` from these June 2022 observations and summing the values.
+
+```{r gwynnda_butts}
+gwynnda_butts = 
+  trash_wheel |>
+  filter(
+    wheel == "Gwynnda",
+    month == "June",
+    year == 2022
+  ) |>
+  pull(cigarette_butts) |>
+  sum()
+
+gwynnda_butts
+```
+
+2. Gwynnda collected `r gwynnda_butts` cigarette butts in June 2022.
 
 
 
