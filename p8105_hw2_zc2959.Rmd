@@ -444,7 +444,36 @@ n_amyloid
 2. I noticed that the amyloid measurements were stored in separate columns for different follow-up visits, so I used `pivot_longer()` to put the visit and amyloid ratio into separate variables. The cleaned dataset has `r nrow(amyloid_df)` observations from `r n_amyloid` participants.
 
 
+## Comparing Participants
 
+I used `anti_join()` to check whether any participants appear in only one of the two datasets.
+
+```{r unmatched_participants}
+baseline_only = 
+  baseline_df |>
+  anti_join(
+    amyloid_df,
+    by = "id"
+  ) |>
+  select(id)
+
+amyloid_only = 
+  amyloid_df |>
+  anti_join(
+    baseline_df,
+    by = "id"
+  ) |>
+  distinct(id)
+
+baseline_only
+amyloid_only
+```
+
+### Participant Comparison
+
+1. I found that `r nrow(baseline_only)` participants appear only in the baseline dataset.
+
+2. `r nrow(amyloid_only)` participants appear only in the amyloid dataset, so the two datasets do not contain exactly the same participants.
 
 
 
