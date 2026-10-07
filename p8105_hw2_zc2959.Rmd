@@ -266,6 +266,72 @@ gwynnda_butts
 
 2. Gwynnda collected `r gwynnda_butts` cigarette butts in June 2022.
 
+# Problem 3
+
+## Baseline Demographic Data
+
+```{r}
+baseline_all = 
+  read_csv(
+    "./data/data_mci/MCI_baseline.csv",
+    skip = 1,
+    na = "."
+  ) |>
+  janitor::clean_names() |>
+  rename(
+    age_baseline = current_age,
+    age_mci = age_at_onset
+  ) |>
+  mutate(
+    sex = case_match(
+      sex,
+      1 ~ "Male",
+      0 ~ "Female"
+    ),
+    sex = as.factor(sex),
+    apoe4 = case_match(
+      apoe4,
+      1 ~ "Carrier",
+      0 ~ "Non-carrier"
+    ),
+    apoe4 = as.factor(apoe4)
+  )
+
+head(baseline_all, 5)
+names(baseline_all)
+dim(baseline_all)
+```
+
+We check for participants who had already developed MCI by the time of the baseline visit and remove them because they do not meet the study inclusion criteria.
+
+```{r}
+baseline_excluded = 
+  baseline_all |>
+  filter(
+    !is.na(age_mci),
+    age_mci <= age_baseline
+  )
+
+baseline_excluded |>
+  select(id, age_baseline, age_mci)
+
+baseline_df = 
+  baseline_all |>
+  filter(
+    is.na(age_mci) | age_mci > age_baseline
+  )
+
+head(baseline_df, 5)
+dim(baseline_df)
+```
+
+### Baseline Data Description
+
+1. The original baseline dataset has `r nrow(baseline_all)` participants. After removing `r nrow(baseline_excluded)` participants who had already developed MCI at baseline, `r nrow(baseline_df)` participants remain in the cleaned dataset.
+
+2. The first row of the file contains descriptions rather than the actual variable names, so `skip = 1` was used when importing the data. `"."` was treated as a missing value for participants who did not develop MCI during follow-up.
+
+3. The baseline dataset includes variables such as age, sex, education, APOE4 carrier status, and age of MCI onset. Since `sex` and `apoe4` were originally coded as 0 and 1, I changed them to `Female` / `Male` and `Non-carrier` / `Carrier` and stored them as factors.
 
 
 
