@@ -439,7 +439,7 @@ n_amyloid
 
 ### Amyloid Data Description
 
-1. Since the first row contains descriptions rather than the variable names, I used `skip = 1` when importing the file. I also treated `"NA"` and `"Na"` as missing values.
+1. Since the first row contains descriptions rather than the variable names, I used `skip = 1` when importing the file. I also treated `"NA"` and `"Na"`, and blank cells as missing values.
 
 2. I noticed that the amyloid measurements were stored in separate columns for different follow-up visits, so I used `pivot_longer()` to put the visit and amyloid ratio into separate variables. The cleaned dataset has `r nrow(amyloid_df)` observations from `r n_amyloid` participants.
 
